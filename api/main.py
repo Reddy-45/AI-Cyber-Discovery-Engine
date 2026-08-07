@@ -19,6 +19,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.routes import router
+from api.discovery_routes import router as discovery_router
 
 # ── App Instance ──────────────────────────────────────────────────────
 
@@ -26,10 +27,11 @@ app = FastAPI(
     title="AI Cyber Discovery Engine API",
     description=(
         "REST interface for the AI Cyber Discovery Engine. "
-        "Exposes threat analysis, alert retrieval, executive summaries, "
-        "MITRE ATT&CK mapping, and attack graph topology."
+        "Accepts any analyst input (IOC, CVE, malware name, APT group, "
+        "MITRE technique, natural language, STIX bundle, JSON logs, reports) "
+        "and returns normalized, correlated, and explained threat intelligence."
     ),
-    version="0.1.0",
+    version="0.2.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -49,6 +51,7 @@ app.add_middleware(
 # ── Routes ────────────────────────────────────────────────────────────
 
 app.include_router(router, prefix="/api/v1", tags=["engine"])
+app.include_router(discovery_router, prefix="/api/v1", tags=["discovery"])
 
 
 # ── Health Check ──────────────────────────────────────────────────────
