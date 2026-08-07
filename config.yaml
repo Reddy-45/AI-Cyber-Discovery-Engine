@@ -1,0 +1,26 @@
+# AI Cyber Discovery Engine
+# Runtime Configuration
+
+engine:
+  name: "AI Cyber Discovery Engine"
+  version: "0.1.0"
+
+pipeline:
+  time_window_seconds: 300        # Correlation sliding window (5 min)
+  min_events_for_chain: 2         # Min events to form an attack chain
+  alert_threshold: 55             # Risk scores >= this become alerts (0-100)
+
+anomaly:
+  contamination: 0.1              # Expected fraction of anomalies
+
+risk_weights:
+  severity: 0.30
+  anomaly_score: 0.25
+  mitre_stage: 0.20
+  frequency: 0.15
+  asset_criticality: 0.10
+
+data:
+  mitre_path: "data/mitre_attack.json"
+  threat_intel_path: "data/threat_intel.json"
+  database_path: "data/engine.db"

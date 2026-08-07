@@ -1,0 +1,96 @@
+[
+  {
+    "timestamp": "2025-06-15T01:58:10Z",
+    "source_ip": "198.51.100.77",
+    "dest_ip": "10.0.0.0/24",
+    "dest_port": 0,
+    "protocol": "TCP",
+    "event_type": "network",
+    "severity": "medium",
+    "description": "NMAP SYN scan detected from 198.51.100.77 targeting subnet 10.0.0.0/24",
+    "scan_type": "SYN",
+    "ports_scanned": 1024
+  },
+  {
+    "timestamp": "2025-06-15T01:58:33Z",
+    "source_ip": "198.51.100.77",
+    "dest_ip": "10.0.0.5",
+    "dest_port": 22,
+    "protocol": "TCP",
+    "event_type": "network",
+    "severity": "medium",
+    "description": "Port probe from 198.51.100.77 to 10.0.0.5:22 - OPEN",
+    "scan_type": "port_probe",
+    "result": "open"
+  },
+  {
+    "timestamp": "2025-06-15T01:58:34Z",
+    "source_ip": "198.51.100.77",
+    "dest_ip": "10.0.0.5",
+    "dest_port": 80,
+    "protocol": "TCP",
+    "event_type": "network",
+    "severity": "low",
+    "description": "Port probe from 198.51.100.77 to 10.0.0.5:80 - CLOSED",
+    "scan_type": "port_probe",
+    "result": "closed"
+  },
+  {
+    "timestamp": "2025-06-15T01:58:35Z",
+    "source_ip": "198.51.100.77",
+    "dest_ip": "10.0.0.5",
+    "dest_port": 443,
+    "protocol": "TCP",
+    "event_type": "network",
+    "severity": "low",
+    "description": "Port probe from 198.51.100.77 to 10.0.0.5:443 - CLOSED",
+    "scan_type": "port_probe",
+    "result": "closed"
+  },
+  {
+    "timestamp": "2025-06-15T01:58:36Z",
+    "source_ip": "198.51.100.77",
+    "dest_ip": "10.0.0.5",
+    "dest_port": 3306,
+    "protocol": "TCP",
+    "event_type": "network",
+    "severity": "high",
+    "description": "Port probe from 198.51.100.77 to 10.0.0.5:3306 (MySQL) - OPEN",
+    "scan_type": "port_probe",
+    "result": "open"
+  },
+  {
+    "timestamp": "2025-06-15T02:50:00Z",
+    "source_ip": "10.0.0.5",
+    "dest_ip": "185.220.101.33",
+    "dest_port": 443,
+    "protocol": "TCP",
+    "event_type": "network",
+    "severity": "critical",
+    "description": "Large outbound transfer 10.0.0.5 → 185.220.101.33 — 847 MB over 12 minutes",
+    "bytes_transferred": 888045568,
+    "duration_seconds": 720
+  },
+  {
+    "timestamp": "2025-06-15T03:00:00Z",
+    "source_ip": "10.0.0.5",
+    "dest_ip": "10.0.0.15",
+    "dest_port": 445,
+    "protocol": "TCP",
+    "event_type": "network",
+    "severity": "high",
+    "description": "SMB connection from 10.0.0.5 to internal host 10.0.0.15:445 (lateral movement indicator)",
+    "scan_type": "lateral_probe"
+  },
+  {
+    "timestamp": "2025-06-15T10:15:00Z",
+    "source_ip": "10.10.5.1",
+    "dest_ip": "8.8.8.8",
+    "dest_port": 53,
+    "protocol": "UDP",
+    "event_type": "network",
+    "severity": "info",
+    "description": "DNS query from internal workstation — normal traffic",
+    "query": "google.com"
+  }
+]

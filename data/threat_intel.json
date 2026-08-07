@@ -1,0 +1,46 @@
+{
+  "comment": "Local threat intelligence — known malicious IPs, hashes, domains.",
+  "malicious_ips": [
+    {
+      "ip": "203.0.113.42",
+      "tags": ["known_scanner", "ssh_brute_force"],
+      "confidence": 0.95,
+      "source": "AbuseIPDB (simulated)"
+    },
+    {
+      "ip": "198.51.100.77",
+      "tags": ["port_scanner", "recon"],
+      "confidence": 0.88,
+      "source": "Shodan feed (simulated)"
+    },
+    {
+      "ip": "185.220.101.33",
+      "tags": ["tor_exit_node", "c2_infrastructure"],
+      "confidence": 0.99,
+      "source": "Tor Project exit list (simulated)"
+    },
+    {
+      "ip": "185.220.101.200",
+      "tags": ["tor_exit_node", "c2_infrastructure", "ransomware_c2"],
+      "confidence": 0.99,
+      "source": "Tor Project exit list (simulated)"
+    }
+  ],
+  "malicious_hashes": [
+    {
+      "hash": "84c82835a5d21bbcf75a61706d8ab549",
+      "malware_family": "WannaCry",
+      "type": "ransomware",
+      "confidence": 1.0,
+      "source": "VirusTotal (simulated)"
+    }
+  ],
+  "malicious_domains": [
+    {
+      "domain": "iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com",
+      "tags": ["wannacry_killswitch"],
+      "confidence": 1.0,
+      "source": "WannaCry incident report"
+    }
+  ]
+}

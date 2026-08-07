@@ -1,0 +1,67 @@
+{
+  "techniques": [
+    {
+      "technique_id": "T1595",
+      "technique_name": "Active Scanning",
+      "tactic": "Reconnaissance",
+      "tactic_order": 1,
+      "keywords": ["scan", "nmap", "port probe", "sweep", "discovery", "ping"]
+    },
+    {
+      "technique_id": "T1110",
+      "technique_name": "Brute Force",
+      "tactic": "Credential Access",
+      "tactic_order": 3,
+      "keywords": ["failed password", "failed login", "authentication failure", "brute", "repeated", "invalid password"]
+    },
+    {
+      "technique_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "tactic": "Credential Access",
+      "tactic_order": 3,
+      "keywords": ["accepted password", "successful login", "authenticated", "logged in", "accepted publickey"]
+    },
+    {
+      "technique_id": "T1548",
+      "technique_name": "Abuse Elevation Control Mechanism",
+      "tactic": "Privilege Escalation",
+      "tactic_order": 4,
+      "keywords": ["sudo", "privilege escalation", "root", "su -", "administrator", "elevated"]
+    },
+    {
+      "technique_id": "T1021",
+      "technique_name": "Remote Services",
+      "tactic": "Lateral Movement",
+      "tactic_order": 5,
+      "keywords": ["smb", "rdp", "ssh lateral", "wmi", "psexec", "lateral", "445", "3389"]
+    },
+    {
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "tactic": "Impact",
+      "tactic_order": 7,
+      "keywords": ["ransomware", "encryption", "wannacry", "encrypt", "locked", "ransom"]
+    },
+    {
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "tactic": "Exfiltration",
+      "tactic_order": 6,
+      "keywords": ["exfiltration", "large outbound", "data transfer", "c2", "beacon", "tor", "mb transferred"]
+    },
+    {
+      "technique_id": "T1071",
+      "technique_name": "Application Layer Protocol",
+      "tactic": "Command and Control",
+      "tactic_order": 6,
+      "keywords": ["c2 beacon", "command and control", "9001", "tor network", "covert channel"]
+    },
+    {
+      "technique_id": "T1588",
+      "technique_name": "Obtain Capabilities",
+      "tactic": "Resource Development",
+      "tactic_order": 1,
+      "keywords": ["exploit", "eternalblue", "ms17-010", "vulnerability", "cve"]
+    }
+  ]
+}
