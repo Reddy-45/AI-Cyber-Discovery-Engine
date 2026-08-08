@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 # ── Defaults ──────────────────────────────────────────────────────────
 OLLAMA_BASE_URL    = "http://localhost:11434"
-DEFAULT_MODEL      = "llama3.2"
+DEFAULT_MODEL      = "qwen3:8b"
 AVAILABILITY_TIMEOUT = 5    # seconds — fast check
 GENERATE_TIMEOUT   = 90     # seconds — allow for slower models
 
