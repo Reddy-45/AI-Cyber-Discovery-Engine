@@ -584,6 +584,50 @@ class TestLLMReasonerOllamaPath:
         with pytest.raises(ValueError):
             _extract_json('{"key": "value"')
 
+    # ── Qwen3 <think> block stripping ─────────────────────────────────
+
+    def test_extract_json_strips_think_block_before_json(self):
+        """Qwen3 emits <think>…</think> before the JSON object."""
+        raw = '<think>Let me reason about this...</think>\n{"key": "value"}'
+        data = _extract_json(raw)
+        assert data["key"] == "value"
+
+    def test_extract_json_strips_think_block_after_json(self):
+        """<think> block appearing after JSON should still parse correctly."""
+        raw = '{"key": "value"}<think>extra reasoning</think>'
+        data = _extract_json(raw)
+        assert data["key"] == "value"
+
+    def test_extract_json_strips_multiline_think_block(self):
+        """Multi-line <think> blocks are stripped."""
+        raw = '<think>\nStep 1: analyse...\nStep 2: conclude...\n</think>\n{"result": 42}'
+        data = _extract_json(raw)
+        assert data["result"] == 42
+
+    def test_extract_json_strips_think_and_markdown_fence(self):
+        """Both <think> and markdown fences present simultaneously."""
+        raw = '<think>thinking...</think>\n```json\n{"key": "value"}\n```'
+        data = _extract_json(raw)
+        assert data["key"] == "value"
+
+    def test_extract_json_think_block_case_insensitive(self):
+        """<THINK> upper-case variant is also stripped."""
+        raw = '<THINK>Reasoning...</THINK>{"key": "ok"}'
+        data = _extract_json(raw)
+        assert data["key"] == "ok"
+
+    def test_extract_json_think_only_raises(self):
+        """A response that is ONLY a <think> block (no JSON) must raise."""
+        with pytest.raises(ValueError):
+            _extract_json("<think>I could not produce any JSON.</think>")
+
+    def test_extract_json_think_with_nested_json_content(self):
+        """JSON-like text inside <think> is not extracted."""
+        raw = '<think>{"fake": "json inside think"}</think>{"real": "json"}'
+        data = _extract_json(raw)
+        assert data["real"] == "json"
+        assert "fake" not in data
+
 
 # ══════════════════════════════════════════════════════════════════════
 # Section F — TemplateReasoner
@@ -988,3 +1032,65 @@ class TestPackageImports:
     def test_import_template_reasoner(self):
         from reasoning import TemplateReasoner as TR
         assert TR is TemplateReasoner
+
+
+# ══════════════════════════════════════════════════════════════════════
+# Section K — Qwen3 model preference
+# ══════════════════════════════════════════════════════════════════════
+
+class TestQwen3ModelPreference:
+    """Section K: Verify qwen3:8b is prioritised in best_available_model()."""
+
+    def _client_with_models(self, models: list[str]) -> OllamaClient:
+        client = OllamaClient()
+        with patch.object(client, "list_models", return_value=models):
+            best = client.best_available_model()
+        return best
+
+    def test_prefers_qwen3_8b_over_llama(self):
+        models = ["llama3.2:latest", "qwen3:8b", "mistral"]
+        best = self._client_with_models(models)
+        assert best == "qwen3:8b"
+
+    def test_prefers_qwen3_8b_over_mistral(self):
+        models = ["mistral:latest", "qwen3:8b"]
+        best = self._client_with_models(models)
+        assert best == "qwen3:8b"
+
+    def test_prefers_qwen3_variant_over_llama(self):
+        """Any qwen3 variant beats llama3.2."""
+        models = ["llama3.2:latest", "qwen3:14b"]
+        best = self._client_with_models(models)
+        assert best.startswith("qwen3")
+
+    def test_falls_back_to_llama_when_no_qwen3(self):
+        models = ["llama3.2:latest", "mistral"]
+        best = self._client_with_models(models)
+        assert best.startswith("llama3.2")
+
+    def test_falls_back_to_mistral_when_no_qwen3_or_llama(self):
+        models = ["mistral:latest", "gemma2:2b"]
+        best = self._client_with_models(models)
+        assert best.startswith("mistral")
+
+    def test_falls_back_to_default_when_no_models(self):
+        client = OllamaClient()
+        with patch.object(client, "list_models", return_value=[]):
+            best = client.best_available_model()
+        assert best == DEFAULT_MODEL
+
+    def test_default_model_is_qwen3_8b(self):
+        assert DEFAULT_MODEL == "qwen3:8b"
+
+    def test_best_available_model_prefers_llama32(self):
+        """Backward-compat alias — now qwen3:8b wins over llama3.2."""
+        client = OllamaClient()
+        with patch.object(client, "list_models", return_value=["llama3.2", "qwen3:8b"]):
+            best = client.best_available_model()
+        assert best == "qwen3:8b"
+
+    def test_best_available_model_falls_back_to_default(self):
+        client = OllamaClient()
+        with patch.object(client, "list_models", return_value=[]):
+            best = client.best_available_model()
+        assert best == DEFAULT_MODEL

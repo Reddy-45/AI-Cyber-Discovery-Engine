@@ -20,6 +20,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api.routes import router
 from api.discovery_routes import router as discovery_router
+from api.investigation_routes import router as investigation_router
 
 # ── App Instance ──────────────────────────────────────────────────────
 
@@ -52,6 +53,7 @@ app.add_middleware(
 
 app.include_router(router, prefix="/api/v1", tags=["engine"])
 app.include_router(discovery_router, prefix="/api/v1", tags=["discovery"])
+app.include_router(investigation_router, prefix="/api/v1", tags=["investigation"])
 
 
 # ── Health Check ──────────────────────────────────────────────────────
